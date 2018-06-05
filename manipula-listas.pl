@@ -99,11 +99,11 @@ retirar_ocor(X,[Z|Y],R):-
 
 %10.-----------------------------------------------------------
 
-elimina_rep([],[]).
-elimina_rep([X|Y],L):-
-    elimina_rep(Y,L2),
-    remove_ocor(L2,X,L1),
-    inserir_cabeca(L1,X,L).
+retire_repet([],[]).
+retire_repet([X|Y],R):-
+    retire_repet(Y,R2),
+    retirar_ocor(X,R2,R1),
+    inserir_cabeca(X,R1,R),!.
 
 %11.-----------------------------------------------------------
 
@@ -149,7 +149,7 @@ ex14([X|Y],[Z|W],R):-
 
 %15.------------------------------------------------------------
 
-inserir_cabeca(R,X,[X|R]).
+inserir_cabeca(X,L,[X|L]).
 
 %16.------------------------------------------------------------
 
