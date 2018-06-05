@@ -107,31 +107,29 @@ retire_repet([X|Y],R):-
 
 %11.-----------------------------------------------------------
 
-concat1([],A,A).
-concat1([X|Y],L,[X|R]):-
-    concat1(Y,L,R).
+concatenar([],L2,L2).
+concatenar([X|Y],L,[X|W]):-
+    concatenar(Y,L,W).
 
 %12.-----------------------------------------------------------
 
 maior([X],X).
-maior([X|[Y|Z]],L):-
-    (X>Y),
-    maior([X|Z],L).
-
-maior([X|[Y|Z]],L):-
-    (Y>=X),
-    maior([Y|Z],L).
+maior([X|[Y|Z]],M):-
+    X>Y,
+    maior([X|Z],M).
+maior([X|[Y|Z]],M):-
+    Y>=X,
+    maior([Y|Z],M),!.
 
 %13.-----------------------------------------------------------
 
 menor([X],X).
-menor([X|[Y|Z]],L):-
-    (X<Y),
-    menor([X|Z],L).
-
-menor([X|[Y|Z]],L):-
-    (X>=Y),
-    menor([Y|Z],L).
+menor([X|[Y|Z]],M):-
+    X<Y,
+    menor([X|Z],M).
+menor([X|[Y|Z]],M):-
+    Y=<X,
+    menor([Y|Z],M),!.
 
 %14.------------------------------------------------------------
 
