@@ -89,15 +89,13 @@ tire_elemento(X,[Y|C],[Y|D]):-
 
 %08.09.--------------------------------------------------------
 
-remove_ocor([],_,[]).
-remove_ocor([X|Y],X,R):-
-	remove_ocor(Y,X,R).
-remove_ocor([X|Y],Z,R):-
-	X\=Z,
-	remove_ocor(Y,Z,R1),
-	R = [X|R1].
-
-insere1(R,X,[X|R]).
+retirar_ocor(_,[],[]).
+retirar_ocor(X,[X|Y],R):-
+    retirar_ocor(X,Y,R).
+retirar_ocor(X,[Z|Y],R):-
+    X\=Z,
+    retirar_ocor(X,Y,R1),
+    R = [Z|R1],!.
 
 %10.-----------------------------------------------------------
 
