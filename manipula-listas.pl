@@ -1,3 +1,5 @@
+%01.-----------------------------------------------------------
+
 n_esimo_cc(1,A1,_,A1).
 n_esimo_cc(N,A1,R,AN):-
     N>1,
@@ -6,14 +8,11 @@ n_esimo_cc(N,A1,R,AN):-
     n_esimo_cc(N1,A2,R,AN).
 
 n_esimo(1,A1,_,A1).
-n_esimo(N,A1,Ra,A):-
-    A is (N-1)*Ra + A1.
-
-n_esimo2(1,I,_,I).
-n_esimo2(N,I,R,X):-
+n_esimo(N,A1,R,AN):-
+    N>1,
     N1 is N-1,
-    n_esimo2(N1,I,R,X1),
-    X is R+X1.
+    n_esimo(N1,A1,R,AN1),
+    AN is AN1 + R.
 
 %02.-----------------------------------------------------------
 
@@ -21,13 +20,13 @@ sumPa_cc(A1, R, N, ANS):-
     n_esimo_cc(N,A1,R,AN),
     ANS is ((A1+AN)*N)/2.
 
-sumPa(1,A1,_,A1,A1).
-sumPa(N,A1,R,PA,S):-
-    N>1,
-    N1 is N-1,
-    sumPa(N1,A1,R,PA1,S1),
-    PA is PA1+R,
-    S is S1+R.
+soma_pa(1,P1,_,P1).
+soma_pa(Pos,P1,Ra,R):-
+    Pos > 1,
+    n_esimo(Pos,P1,Ra,R1),
+    Pos1 is Pos - 1,
+    soma_pa(Pos1,P1,Ra,R2),
+    R is R1 + R2, !.
 
 %03. ----------------------------------------------------------
 
