@@ -15,9 +15,16 @@ n_esimo_pa(N,A1,R,AN):-
 
 %02.-----------------------------------------------------------
 
-soma_pa_cc(N, A1, R, ANS):-
-    n_esimo_cc(N,A1,R,AN),
-    ANS is ((A1+AN)*N)/2,!.
+somapa_cc(N,A1,R,SUM):- somapa_cc_aux(N,1,A1,A1,R,SUM).
+
+soma_pa_cc_aux(N,N,A,_,_,A).
+
+soma_pa_cc_aux(N,I,A,AI,R,SUM):-
+    I < N,
+    I1 is I + 1,
+    AI1 is AI + R,
+    AA is A + AI1,
+    soma_pa_cc_aux(N,I1,AA,AI1,R,SUM).
 
 soma_pa(1,A1,_,A1).
 soma_pa(N,A1,R,ANS):-
