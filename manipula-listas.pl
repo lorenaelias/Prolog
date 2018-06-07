@@ -133,17 +133,16 @@ menor([X|[Y|Z]],M):-
 
 %14.------------------------------------------------------------
 
+pegar([],_,[]).
+pegar([X|Y],[Z|W],P):-
+    pegar(Y,[Z|W],P1),
+    posicao(X,[Z|W],ELEM),
+    inserir_cabeca(ELEM,P1,P),!.
+
 posicao(1,[X|_],X).
-posicao(N,[_|Y],R):-
+posicao(N,[_|Y],P):-
     N1 is N-1,
-    posicao(N1,Y,R).
-
-
-ex14([],_,[]).
-ex14([X|Y],[Z|W],R):-
-    ex14(Y,[Z|W],R1),
-    posicao(X,[Z|W],Elem),
-    insere1(R1,Elem,R).
+    posicao(N1,Y,P).
 
 %15.------------------------------------------------------------
 
@@ -151,11 +150,11 @@ inserir_cabeca(X,L,[X|L]).
 
 %16.------------------------------------------------------------
 
-inseren(X,1,A,[A|X]).
-inseren([X|Y],N,A,R):-
-    N1 is N-1,
-    inseren(Y,N1,A,R1),
-    inserir_cabeca(R1,X,R).
+inserir_N(E,1,L,[E|L]).
+inserir_N(E,N,[X|Y],R):-
+   N1 is N-1,
+   inserir_cabeca(X,R1,R),
+   inserir_N(E,N1,Y,R1),!.
 
 %17.-----------------------------------------------------------
 
@@ -166,10 +165,10 @@ inverter([X|Y],R):-
 
 %18.----------------------------------------------------------
 
-substitui(A,B,[A|Y],[B|Y]).
+substitui(A,B,[A|Y],[B|Y]):-!.
 substitui(A,B,[X|Y],R):-
     substitui(A,B,Y,R1),
-    insere1(R1,X,R).
+    inserir_cabeca(X,R1,R),!.
 
 %19.----------------------------------------------------------
 
