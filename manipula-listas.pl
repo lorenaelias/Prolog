@@ -172,43 +172,17 @@ substitui(A,B,[X|Y],R):-
 
 %19.----------------------------------------------------------
 
-%concat1([],A,A).
-%concat1([X|Y],L,[X|R]):-
- %   concat1(Y,L,R).
-aux(_,0,[]).
-aux(X,Y,[X|R1]):-
-	Y1 is Y-1,
-	Y>0,
-	aux(X,Y1,R1).
-
-nplica(_,[],[]).
-nplica(N,[X|Y],R):-
-	nplica(N,Y,R2),
-	aux(X,N,R1),
-	concat1(R1,R2,R).
-
-%%%% OU %%%%
-
-duplica([],[]).
-duplica([X|Y],R):-
+duplica_todos([],[]).
+duplica_todos([X|Y],R):-
 	duplica(Y,Y1),
 	X1 is X*2,
-	R = [X1|Y1].
+        R = [X1|Y1].
 
 %20.----------------------------------------------------------
 
-%%dando o elemento
-ex20(A,[X|Y],R):-
+duplica_um(A,[X|Y],R):-
     B is 2*A,
     substitui(A,B,[X|Y],R).
-
-%% dando a posição
-ex20_2(1,[X|Y],[A|Y]):-
-    A is 2*X.
-ex20_2(N,[X|Y],R):-
-    N1 is N-1,
-    ex20_2(N1,Y,R1),
-    insere1(R1,X,R).
 
 %21.----------------------------------------------------------
 
@@ -217,18 +191,9 @@ nao_vazia([X|Y],[Z|W]):-
 
 %22.----------------------------------------------------------
 
-uniao_completo(A, B, R):-
-    uni(A, B, R1),
-    elimina_rep(R1, R).
-
-uni([],L, L).
-uni([X|Y], L, R):-
-    not(pertence(L, X)),
-    uni(Y, [X|L], R).
-
-uni([X|Y], L, R):-
-    pertence(L,X),
-    uni(Y, L, R).
+uniao(A,B,U):-
+	concatenar(A,B,C),
+	retire_repet(C,U).
 
 %23.----------------------------------------------------------
 
@@ -245,7 +210,6 @@ pertence([_|Y],Z):-
 
 %24.----------------------------------------------------------
 
-igual([X],[X]):-
-	!.
-igual([X|Y],[X|Z]):-
-igual(Y,Z).
+iguais([X],[X]):- !.
+iguais([X|Y],[X|Z]):-
+	iguais(Y,Z).
