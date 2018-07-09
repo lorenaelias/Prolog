@@ -1,57 +1,90 @@
 menu:-
     consult('atores.pl'),
-    repeat,
-    write('1. listar atores'),nl,
-    write('2. adicionar ator'),nl,
-    write('3. remover ator'),nl,
-    write('4. verificar quantidade de filmes'),nl,
-    write('5. sair'),nl,
-    read(Op),
-    ( Op = 5, write('Fim'),nl,!;verifica(Op)), fail.
+    write('1 - listar'),nl,
+    write('2 - adicionar'),nl,
+    write('3 - remover'),nl,
+    write('4 - sair'),nl,
+    le_opcao(Op), trata(Op).
+
+verifica(1):-!.
+verifica(2):-!.
+verifica(3):-!.
+verifica(4):-!.
+verifica(5):-!.
+
+le_opcao(R):-
+   le_atomo(R),
+   verifica(R),!.
+le_opcao(R):-
+   nl,
+   write('opcao inexistente!'),nl,
+   menu,
+   le_opcao(R).
+
+trata(1):-
+    listing(ator/4),nl,
+    menu.
+trata(2):-
+    write('Nome: '),
+    le_atomo(N),nl,
+    write('Filme: '),
+    le_atomo(F),nl,
+    write('Ano: '),
+    le_atomo(A),nl,
+    write('Rank: '),
+    le_atomo(R),nl,
+    assertz(ator(N,F,A,R)),
+    tell('atores.pl'),
+    listing(ator/4),
+    told,menu.
+trata(3):-
+    write('Remover ator: '),
+    le_atomo(Remove),
+    retractall(ator(Remove,_,_,_)),
+    tell('atores.pl'),
+    listing(ator/4),
+    told,menu.
+
+trata(4):-
+    write('Fim..'),nl,
+    abort.
 
 
-%verifica(end_of_file):-!.
-verifica(1):-
-   see('atores.pl'),
-   listing(ator),nl,
-   seen.
-
-verifica(2):-
-   tell('atores.pl'),
-   write('Nome: '), nl, read(Nome),
-   write('Filme: '), nl, read(Filme),
-   write('Data: '), nl, read(Data),
-   write('Rank: '), nl, read(Rank),
-   assertz(ator(Nome,Filme,Data,Rank)),
-   told.
-
-verifica(3):-
-   tell('atores.pl'),
-   write('Nome do ator para remover: '),nl,read(Ator),
-   retract(ator(Ator,_,_,_)),
-   told.
-
-verifica(4):-
-   write('Ator: '),read(At),nl,
-   write('Quantidade de filmes: '),
-   count(At,ator(At,_,_,_),Q),
-   write(Q),nl.
-
-quantidade(N,Q):-
-   see('atores.pl'),
-   Q>1,
-   Q is Q1+1,
-   ator(N,_,_,_),
-   quantidade(N,Q1),
-   seen.
-
-count(_,[],0).
-count(Ator,X:Y, Q):-
-    (Ator == X)-> count(Ator, Y,Q+1),
-    (Ator =\= X)-> count(Ator, Y, Q).
+trata(5):-
+    write('Ator: '),
+    le_atomo(At),
+    contador(At, 0, Q1),
+    write(Q1).
+:-dynamic (ator/4).
 
 
 
+
+contador(A,Q,Q1):-
+    see('atores.pl'),
+    ator(A,_,_,_),
+    Q1 is Q +1,
+    contador(A,Q1,Q1),
+    seen.
 le_atomo(A):-
     le_str(String),
+    name(A,String).
+le_str(String):-
+	get0(Char),
+	le_str_aux(Char,String).
+le_str_aux(-1,[]):-!.
+le_str_aux(10,[]):-!.
+le_str_aux(13,[]):-!.
+le_str_aux(Char,[Char|Resto]):-
+	le_str(Resto).
+
+
+
+
+
+
+
+
+
+
 
